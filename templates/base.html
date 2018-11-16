@@ -1,14 +1,13 @@
 <!doctype html>
 <html>
     <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
         <title>{{page_title}}</title>
-        <style>
-            .error{
-                color: red;
-            }
-        </style>
     </head>
 <body>
+
+    <a id='page_nav' href='/blog'><strong>Main Blog</strong></a>
+    <a id='page_nav' href='/newpost'><strong>Add A Blog Entry</strong></a>
 
     {% with messages = get_flashed_messages(with_categories=True) %}
     <ul>

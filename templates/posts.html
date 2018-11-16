@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{page_title}}</h1>
     
+    <h1>Build a Blog</h1>
+
+    <!-- If block checks to see if there are blog posts to display. -->
     {% if blog_posts|length == 0 %}
     <p>No blog posts yet</p>
     {% else %}
         {% for post in blog_posts %}
-        <p>{{post.title}</p>
+        <h2>{{post.title}</h2>
         <p>{{post.body}}</p>
+        <hr />
     {% endfor %}
     {% endif %}
 
-    
 {% endblock %}

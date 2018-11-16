@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.error{
+    color: red;
+}
+
+.page_nav{
+    display: inline;
+}
+
+.blog_title {
+    padding-bottom: 20px;
+}
+
+h1 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+textarea {
+    margin: 10px 0;
+    width: 540px;
+    height: 120px;
+}
