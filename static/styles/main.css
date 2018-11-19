@@ -9,13 +9,20 @@
 }
 
 .page_nav{
-    /*display: inline-block;*/
+    position: relative;
+    display: inline-block;
     margin: 0;
     padding-right: 10em;
 }
 
 .blog_title {
     padding-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
