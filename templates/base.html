@@ -6,8 +6,10 @@
     </head>
 <body>
 
-    <a id='page_nav' href='/blog'><strong>Main Blog</strong></a>
-    <a id='page_nav' href='/newpost'><strong>Add A Blog Entry</strong></a>
+    <div class="page_nav">
+        <a href='/blog'><strong>Main Blog</strong></a>
+        <a href='/newpost'><strong>Add A Blog Entry</strong></a>
+    </div>
 
     {% with messages = get_flashed_messages(with_categories=True) %}
     <ul>
