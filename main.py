@@ -38,7 +38,8 @@ def new_post():
         new_post = Blog(blog_title, blog_body)
         db.session.add(new_post)
         db.session.commit()
-        return redirect('/blog')
+        id = new_post.id
+        return redirect('/blog?id={0}'.format(id))
         
     return render_template('newpost.html')
 
