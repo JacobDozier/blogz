@@ -13,7 +13,7 @@
         <br />
         
         <p>Type your blog here.</p>
-        <textarea id="body" name="body" rows="10" cols="70">{{blog_body}}</textarea>
+        <textarea id="body" name="body" rows="10" cols="70">{{ request.form['body'] }}</textarea>
         <p class="error">{{ body_error }}</p>
         <input type="submit" value="Submit">
     </form>
