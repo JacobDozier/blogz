@@ -2,13 +2,13 @@
 <html>
     <head>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-        <title>{{page_title}}</title>
+        <title>Build A Blog</title>
     </head>
 <body>
 
     <ul>
-        <li style="float: left"><a href='/blog'><strong>Main Blog</strong></a></li>
-        <li style="float: right;"><a href='/newpost'><strong>Add A Blog Entry</strong></a></li>
+        <li><a href='/blog'><strong>Main Blog</strong></a></li>
+        <li><a href='/newpost'><strong>Add A Blog Entry</strong></a></li>
     </ul>
 
     {% with messages = get_flashed_messages(with_categories=True) %}

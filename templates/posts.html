@@ -8,6 +8,7 @@
     {% if blog_posts|length == 0 %}
     <p>No blog posts yet</p>
     {% else %}
+    
         {% for post in blog_posts %}
         <h2>{{post.title}}</h2> <!-- Make each title an <a> with the post.title as the 
             displayed value with the same link location (blog.html) -->
