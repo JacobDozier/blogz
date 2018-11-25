@@ -5,15 +5,17 @@
     <h1>Add a Blog Post</h1>
     
     <form action="/newpost" method="POST">
-        <label for='title'>Enter your blog's title.</label>
-        <input name='title' type="text">
+        <p>Enter your blog's title.</p>
+        <input name='title' type="text" value="{{blog_title}}">
+        <p class="error">{{ title_error }}</p>
         
         <br />
         <br />
         
-        <label for='body'>Type your blog here.</label>
-        <textarea id="body" name="body" rows="10" cols="70"></textarea>
-        <input type="submit" value="Login">
+        <p>Type your blog here.</p>
+        <textarea id="body" name="body" rows="10" cols="70">{{blog_body}}</textarea>
+        <p class="error">{{ body_error }}</p>
+        <input type="submit" value="Submit">
     </form>
 
 {% endblock %}

@@ -2,6 +2,8 @@
 
 .error{
     color: red;
+    font-style: italic;
+    margin: 0;
 }
 
 .blog_title {
@@ -28,6 +30,14 @@ textarea {
     margin: 10px 0;
     width: 540px;
     height: 120px;
+}
+
+p {
+    margin: 0;
+}
+
+input {
+    margin: 10px 0;
 }
 
 * {

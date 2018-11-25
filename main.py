@@ -23,16 +23,26 @@ def new_post():
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
+        if not blog_title:
+            title_error = "A title is required."
+            if not blog_body:
+                body_error = "Some text is required."
+                return render_template('newpost.html', title_error=title_error, body_error=body_error, blog_title=blog_title, blog_body=blog_body)
+            return render_template('newpost.html', title_error=title_error, blog_title=blog_title)
+        elif not blog_body:
+                body_error = "Some text is required."
+                return render_template('newpost.html', body_error=body_error, blog_title=blog_title)
         new_post = Blog(blog_title, blog_body)
         db.session.add(new_post)
         db.session.commit()
-        return redirect('/')
+        return redirect('/blog')
         
     return render_template('newpost.html')
 
 @app.route('/blog')
 def main_blog():
-    return redirect('/')
+    blog_posts = Blog.query.all()
+    return render_template('posts.html', page_title="Build a Blog", blog_posts=blog_posts)
     
 @app.route('/', methods=['POST', 'GET'])
 def index():
