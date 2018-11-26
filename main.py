@@ -13,10 +13,24 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(255))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, title, body):
+    def __init__(self, title, body, owner_id):
         self.title = title
         self.body = body
+        self.owner_id = owner_id
+
+class User(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(25))
+    password = db.Column(db.String(25))
+    blogs = db.Column(db.Integer, db.ForeignKey('blog.id'))
+
+    def __init__(self, email, password, blogs):
+        self.email = email
+        self.password = password
+        self.blogs = blogs
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -43,6 +57,7 @@ def new_post():
                 body_error = "Some text is required."
                 return render_template('newpost.html', body_error=body_error, blog_title=blog_title)
 
+        # Need to add blog id when creating the new_post.
         new_post = Blog(blog_title, blog_body)
         db.session.add(new_post)
         db.session.commit()
