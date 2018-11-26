@@ -18,6 +18,14 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    return
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return
+
 @app.route('/newpost', methods=['GET', 'POST'])
 def new_post():
     if request.method == 'POST':
