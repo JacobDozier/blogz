@@ -39,22 +39,22 @@ def signup():
 
 @app.before_request
 def require_login():
-    allowed_routes = ['index', 'login', 'signup', 'main_blog']
+    allowed_routes = ['index', 'login', 'signup', 'main_blog', 'static']
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # if request.method == 'POST':
-    #     email = request.form['email']
-    #     password = request.form['password']
-    #     user = User.query.filter_by(email=email).first()
-    # if user and user.password == password:
-    #     session['email'] = email
-    #     flash("Logged in")
-    #     return redirect('/')
-    # else:
-    #     flash('User password incorrect, or user does not exist', 'error')
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+        if user and user.password == password:
+            session['email'] = email
+            flash("Logged in")
+            return redirect('/')
+        else:
+            flash('User password incorrect, or user does not exist', 'error')
 
     return render_template('login.html')
 
