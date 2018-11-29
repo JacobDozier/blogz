@@ -3,7 +3,7 @@
 .error{
     color: red;
     font-style: italic;
-    margin: 0;
+    margin: 10px 0;
 }
 
 .blog_title {
@@ -39,7 +39,7 @@ p {
 }
 
 input {
-    margin: 10px 0;
+    margin: 0;
 }
 
 body {
