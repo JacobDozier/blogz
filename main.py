@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+# TODO implement auto escaping
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
@@ -29,34 +31,68 @@ class User(db.Model):
     password = db.Column(db.String(25))
     blogs = db.relationship('Blog', backref='owner')
 
-    def __init__(self, email, password, blogs):
-        self.email = email
+    def __init__(self, username, password):
+        self.username = username
         self.password = password
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        valid_user = True
+        valid_password = True
+        valid_retyped_password = True
+        # TODO - validate users data
+        if len(username) < 3 or not username:
+            valid_user = False
+            flash('That is an invalid username', 'error')
+        if not password:
+            valid_password = False
+            flash('Password cannot be blank', 'error')
+        if not verify or password != verify:
+            valid_retyped_password = False
+            flash('Please retype the password exactly', 'error')
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('User already exists', 'error')
+        if not existing_user and valid_user and valid_password and valid_retyped_password:
+            new_user = User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/login')
+                
     return render_template('signup.html')
 
 @app.before_request
 def require_login():
     allowed_routes = ['index', 'login', 'signup', 'main_blog', 'static']
-    if request.endpoint not in allowed_routes and 'email' not in session:
+    if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(username=username).first()
         if user and user.password == password:
-            session['email'] = email
-            flash("Logged in")
+            session['username'] = username
+            flash('Logged in', 'login')
             return redirect('/')
         else:
             flash('User password incorrect, or user does not exist', 'error')
 
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/')
 
 @app.route('/newpost', methods=['GET', 'POST'])
 def new_post():
