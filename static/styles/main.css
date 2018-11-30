@@ -1,16 +1,34 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-.error{
+.error {
     color: red;
     font-style: italic;
-    margin: 10px 0;
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.login {
+    color: lightgreen;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0px;
 }
 
 .blog_title {
     padding-bottom: 20px;
 }
 
+table {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+td {
+    text-align: left;
+}
+
 ul {
+    text-align: center;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -18,6 +36,7 @@ ul {
 }
 
 li {
+    text-align: center;
     float: left;
     font-size: 22px;
     padding-right: 20px;
@@ -26,6 +45,11 @@ li {
 h1 {
     padding-top: 20px;
     padding-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
 }
 
 textarea {
@@ -36,6 +60,7 @@ textarea {
 
 p {
     margin: 0;
+    text-align: center;
 }
 
 input {
@@ -44,6 +69,7 @@ input {
 
 body {
     font-family: 'Open Sans', sans-serif;
+    text-align: center;
 }
 
 * {
