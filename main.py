@@ -19,10 +19,11 @@ class Blog(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     time_stamp = db.Column(db.DateTime)
 
-    def __init__(self, title, body, owner_id):
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
-        self.owner_id = owner_id
+        self.owner = owner
+        self.time_stamp = datetime.utcnow()
 
 class User(db.Model):
 
@@ -97,9 +98,9 @@ def logout():
 @app.route('/newpost', methods=['GET', 'POST'])
 def new_post():
     if request.method == 'POST':
+        blog_owner = User.query.filter_by(username=session['username']).first()
         blog_title = request.form['title']
         blog_body = request.form['body']
-        blog_owner = User.query.filter_by(username=session['username']).first()
 
         # Checking for blanks and rerenders with error messages.
         if not blog_title:
@@ -116,6 +117,7 @@ def new_post():
 
         db.session.add(new_post)
         db.session.commit()
+
         return redirect('/blog?id={0}'.format(str(new_post.id)))
         
     return render_template('newpost.html')
