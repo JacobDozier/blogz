@@ -14,6 +14,20 @@
     margin: 10px 0px;
 }
 
+.signup {
+    color: lightgreen;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.logout {
+    color: lightgreen;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0px;
+}
+
 .blog_title {
     padding-bottom: 20px;
 }

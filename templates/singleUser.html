@@ -2,6 +2,8 @@
 
 {% block content %}
 
+        <h2>{{user.username}}'s Posts</h2>
+
         <!-- If block checks to see if there are blog posts to display. -->
         {% if user_blogs|length == 0 %}
         <p>No blog posts yet</p>

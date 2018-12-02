@@ -7,8 +7,6 @@ env = Environment(autoescape=select_autoescape(
     default_for_string=True,
 ))
 
-# TODO implement auto escaping
-
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
@@ -51,7 +49,6 @@ def signup():
         valid_user = True
         valid_password = True
         valid_retyped_password = True
-        # TODO - validate users data
         if len(username) < 3 or not username:
             valid_user = False
             flash('That is an invalid username', 'error')
@@ -70,6 +67,7 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
+            flash('You have successfully signed up for blogz. Please log in to start posting.', 'signup')
             return redirect('/login')
                 
     return render_template('signup.html')
@@ -100,6 +98,7 @@ def login():
 @app.route('/logout')
 def logout():
     del session['username']
+    flash('Logout successful.', 'logout')
     return redirect('/')
 
 @app.route('/newpost', methods=['GET', 'POST'])
@@ -135,7 +134,7 @@ def main_blog():
         user_id = request.args.get("user")
         user = User.query.get(user_id)
         user_blogs = Blog.query.filter_by(owner=user).all()
-        return render_template('singleUser.html', user_blogs=user_blogs)
+        return render_template('singleUser.html', user=user, user_blogs=user_blogs)
 
     blog_id = request.args.get('id')
     if blog_id == None:
