@@ -1,6 +1,11 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from jinja2 import Environment, select_autoescape
+env = Environment(autoescape=select_autoescape(
+    enabled_extensions=('html'),
+    default_for_string=True,
+))
 
 # TODO implement auto escaping
 
@@ -72,8 +77,10 @@ def signup():
 @app.before_request
 def require_login():
     allowed_routes = ['index', 'login', 'signup', 'main_blog', 'static']
-    if request.endpoint not in allowed_routes and 'username' not in session:
+    if request.endpoint == 'new_post' and 'username' not in session:
         return redirect('/login')
+    elif request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/blog')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -84,7 +91,7 @@ def login():
         if user and user.password == password:
             session['username'] = username
             flash('Logged in', 'login')
-            return redirect('/')
+            return redirect('/newpost')
         else:
             flash('User password incorrect, or user does not exist', 'error')
 
@@ -124,10 +131,17 @@ def new_post():
 
 @app.route('/blog')
 def main_blog():
-    blog_posts = Blog.query.all()
+    if "user" in request.args:
+        user_id = request.args.get("user")
+        user = User.query.get(user_id)
+        user_blogs = Blog.query.filter_by(owner=user).all()
+        return render_template('singleUser.html', user_blogs=user_blogs)
 
-    if request.args:
-        blog_id = request.args.get('id')
+    blog_id = request.args.get('id')
+    if blog_id == None:
+        blog_posts = Blog.query.all()
+        return render_template('posts.html', blog_posts=blog_posts)
+    else:
         blog_post = Blog.query.get(blog_id)
         return render_template('display_post.html', blog_post=blog_post)
 
@@ -135,9 +149,8 @@ def main_blog():
     
 @app.route('/', methods=['POST', 'GET'])
 def index():
-
-    blog_posts = Blog.query.all()
-    return render_template('posts.html', blog_posts=blog_posts)
+    user_list = User.query.all()
+    return render_template('index.html', user_list=user_list)
 
 
 if __name__ == '__main__':
