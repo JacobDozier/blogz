@@ -5,6 +5,10 @@
     <form action='/blog?id={{blog_post.id}}'>
         <h1>{{blog_post.title}}</h1>
         <p>{{blog_post.body}}</p>
+        <br />
+        <p>Post created: {{blog_post.time_stamp}}</p>
+        <p style="font-style: italic;">Written by <a href='/blog?user={{blog_post.owner_id}}'>{{blog_post.owner.username}}</a></p>
+        <hr />
     </form>
 
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <!-- If block checks to see if there are blog posts to display. -->
+        {% if user_blogs|length == 0 %}
+        <p>No blog posts yet</p>
+        {% else %}
+
+        {% for blog_post in user_blogs %}
+        <a href='/blog?id={{blog_post.id}}'><h2>{{blog_post.title}}</h2></a>
+        <p>{{blog_post.body}}</p>
+        <br />
+        <p>Post created: {{blog_post.time_stamp}}</p>
+        <p style="font-style: italic;">Written by <a href='/blog?user={{blog_post.owner_id}}'>{{blog_post.owner.username}}</a></p>
+        <hr />
+        {% endfor %}
+        {% endif %}
+    </form>
+
+{% endblock %}
